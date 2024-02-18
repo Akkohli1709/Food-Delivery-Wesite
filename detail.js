@@ -150,3 +150,60 @@ function burger(mq) {
     }
   }
 }
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAt5Wtm_e7eZ3tYAaNKgSmOdDUwOfkKkyw",
+  authDomain: "authentication-a6882.firebaseapp.com",
+  databaseURL: "https://authentication-a6882-default-rtdb.firebaseio.com",
+  projectId: "authentication-a6882",
+  storageBucket: "authentication-a6882.appspot.com",
+  messagingSenderId: "990198581745",
+  appId: "1:990198581745:web:4c76f565784f424d385c50"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+// Reference messages collection
+var messagesRef = firebase.database().ref('messages');
+
+// Listen for form submit
+document.getElementById('contactForm').addEventListener('submit', submitForm);
+
+// Submit form
+function submitForm(e){
+  e.preventDefault();
+
+  // Get values
+  var name = getInputVal('name');
+  var email = getInputVal('email');
+  var password = getInputVal('signuppassword');
+
+  // Save message
+  saveMessage(name, email, password);
+
+  // Show alert
+  document.querySelector('.alert').style.display = 'block';
+
+  // Hide alert after 3 seconds
+  setTimeout(function(){
+    document.querySelector('.alert').style.display = 'none';
+  },3000);
+
+  // Clear form
+  document.getElementById('contactForm').reset();
+}
+
+// Function to get get form values
+function getInputVal(id){
+  return document.getElementById(id).value;
+}
+
+// Save message to firebase
+function saveMessage(name, email, password){
+  var newMessageRef = messagesRef.push();
+  newMessageRef.set({
+    name: name,
+    email:email,
+    password:signuppassword
+  });
+}
